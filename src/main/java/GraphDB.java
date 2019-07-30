@@ -28,12 +28,6 @@ public class GraphDB {
 
      public HashMap<String, Object> locations = new HashMap<>();
 
-
-
-
-
-
-
     /**
      * Example constructor shows how to create and start an XML parser.
      * You do not need to modify this constructor, but you're welcome to do so.
@@ -59,8 +53,6 @@ public class GraphDB {
      * adds new node into the graph
      * @param node node to be added
      */
-
-
     void addNode(Node node){
 
         nodeMap.put(node.id, node);
@@ -71,8 +63,6 @@ public class GraphDB {
      * removes specified node from the graph (this might not be needed)
      * @param node input node
      */
-
-
     public void removeNode(Node node){
 
         nodeMap.remove(node.id);
@@ -81,35 +71,10 @@ public class GraphDB {
 
     void connectNodes(Way way){
 
-        // maybe add way name to help with router directions so we can access way name from nodes.
-
         long previousID;
         long currentID;
         long nextID;
         List<Long> connectionList = way.getConnectionList();
-
-        //currentID = way.getID(); // make a get id method for ways so cannot change actual instance var of way.
-
-        /*
-        the id of the way is not in the graph, it only represents the way as an object.
-        Therefore we only need to connect the nodes that are in the connection list of the way.
-         */
-
-        // put some documentation here helping
-
-        //currentID = connectionList.get(0);
-
-        //nextID = connectionList.get(0);
-
-       // nodeMap.get(currentID).addConnection(nextID);
-
-        /*
-        need to be at least 2 nodes in connection list of way to even have any connections
-         */
-
-        /*
-        this is to get the for loop kicked off
-         */
 
         currentID = connectionList.get(0);
 
@@ -117,16 +82,9 @@ public class GraphDB {
 
         nodeMap.get(currentID).addConnection(nextID);
 
-        //added extra
-
-        nodeMap.get(currentID).addWayName(way.getWayName());
-
-
-
+        nodeMap.get(currentID).addWayNames(way.getWayName());
 
         for (int index = 1; index < connectionList.size() - 1; index++){
-
-
 
             previousID = connectionList.get(index - 1);
 
@@ -134,22 +92,17 @@ public class GraphDB {
 
             nextID = connectionList.get(index + 1);
 
-            // add previous and next node ids to list of current node
-
             nodeMap.get(currentID).addConnection(previousID);
 
             nodeMap.get(currentID).addConnection(nextID);
 
-            //added extra
-            nodeMap.get(currentID).addWayName(way.getWayName());
+            nodeMap.get(currentID).addWayNames(way.getWayName());
 
         }
 
         nodeMap.get(nextID).addConnection(currentID);
 
-        //added extra
-
-        nodeMap.get(nextID).addWayName(way.getWayName());
+        nodeMap.get(nextID).addWayNames(way.getWayName());
 
 
 
@@ -172,10 +125,6 @@ public class GraphDB {
     private void clean() {
         // TODO: Your code here.
 
-        /*
-        modifying and iterating through nodeMap at the same time need to fix this
-         */
-
         Node currentNode;
 
         List<Long> keysToRemove = new ArrayList<>();
@@ -187,17 +136,13 @@ public class GraphDB {
             if(!currentNode.hasConnection()){
 
                 keysToRemove.add(key);
-
             }
-
         }
 
         for(long key : keysToRemove){
 
             nodeMap.remove(key);
-
         }
-
     }
 
     /**
@@ -205,8 +150,6 @@ public class GraphDB {
      * @return An iterable of id's of all vertices in the graph.
      */
     Iterable<Long> vertices() {
-        //YOUR CODE HERE, this currently returns only an empty list.
-        //return new ArrayList<Long>(); do keyset to arraylist
 
         Set<Long> keys = nodeMap.keySet();
 
@@ -223,7 +166,6 @@ public class GraphDB {
         Node currentNode = nodeMap.get(v);
 
         return currentNode.getConnectionList();
-
     }
 
     /**
@@ -305,8 +247,6 @@ public class GraphDB {
 
                 minDistance = distanceBetweenPoints;
 
-                // probably should make a get method for id for Node class
-
                 minID = node.id;
 
             }
@@ -326,7 +266,6 @@ public class GraphDB {
         Node currentNode = nodeMap.get(v);
 
         return currentNode.getLon();
-
     }
 
     /**
@@ -341,17 +280,10 @@ public class GraphDB {
         return currentNode.getLat();
     }
 
-    /**
-     *
-     */
-
     Node getNode(long id){
 
         return nodeMap.get(id);
-
     }
-
-
 }
 
 

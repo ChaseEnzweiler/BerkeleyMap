@@ -30,8 +30,6 @@ public class Router {
          * @return A list of node id's in the order visited on the shortest path.
          */
 
-        // might have to make a start id
-
         long startID = g.closest(stlon, stlat);
 
         long destinationID = g.closest(destlon, destlat);
@@ -123,12 +121,7 @@ public class Router {
                 }
             }
 
-
-
             marked.add(currentNodeID);
-
-
-
         }
 
         long idToAdd = destinationID;
@@ -146,9 +139,6 @@ public class Router {
         Collections.reverse(path);
 
         return path;
-
-
-
         }
 
 
@@ -169,7 +159,7 @@ public class Router {
 
         } else if(absBearing > 15.0 && absBearing <= 30.0){
 
-            if(bearingDigit < 0.0){
+            if(bearingDigit > 0.0){
                 // turn left
                 return NavigationDirection.DIRECTIONS[3];
 
@@ -228,7 +218,7 @@ public class Router {
 
         Node nextNode;
 
-        String way = currentNode.getWayName();
+        String way = currentNode.sharedWays(g.getNode(route.get(1))); //FIXME may need to loop to find a correct way name
 
         double distance = 0.0;
 
@@ -243,7 +233,7 @@ public class Router {
             next way is the same so update the distance
              */
 
-            if(currentNode.getWayName().equals(nextNode.getWayName())){
+            if(nextNode.hasWayName(way)){
 
                 distance = distance + g.distance(currentNode.getId(), nextNode.getId());
 
@@ -267,9 +257,10 @@ public class Router {
 
                  */
 
-                direction = bearingHelper(currentNode, nextNode, g);
+                direction = bearingHelper(nextNode, currentNode, g); //FIXME added previous Node
 
-                way = nextNode.getWayName();
+
+                way = currentNode.sharedWays(nextNode); //FIXME may need to loop to find correct way name
 
                 distance = 0.0;
 
@@ -282,9 +273,6 @@ public class Router {
         String navigation = direction + " on " + way + " and continue for " + distance + " miles.";
 
         directions.add(NavigationDirection.fromString(navigation));
-
-
-
 
         return directions; // FIXME
     }

@@ -282,8 +282,6 @@ public class MapServer {
     public static List<String> getLocationsByPrefix(String prefix) {
 
         return graph.prefixTrie.getPrefixes(prefix);
-        
-        
     }
 
     /**
@@ -314,8 +312,6 @@ public class MapServer {
         locations.add(locationInfo);
 
         return locations;
-
-
     }
 
     /**

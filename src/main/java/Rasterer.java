@@ -90,7 +90,6 @@ public class Rasterer {
         /*
         find the depth of the images
          */
-
         int depth = findDepth(calculateLondpp(queryLRLon, queryULLon, (int) queryWidth));
 
         /*

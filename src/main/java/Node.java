@@ -18,18 +18,7 @@ public class Node {
     String name;
 
     // added for Extra
-    String wayName = null;
-
-
-
-    /*
-    Store all the id's in a way that share a connection with this node. Stores all adjacent node ids.
-    create way class just to be able to store connections then use that to connect in the graph
-
-
-   create second constructor.
-
-     */
+    List<String> wayNames = new ArrayList<>();
 
     List<Long> connections;
 
@@ -46,19 +35,15 @@ public class Node {
 
     }
 
-
-
     public void addConnection(long connection){
 
         connections.add(connection);
-
 
     }
 
     public void addName(String name){
 
         this.name = name;
-
     }
 
     public boolean hasConnection(){
@@ -93,16 +78,47 @@ public class Node {
         return id;
     }
 
-    public void addWayName(String wayName){
+    public void addWayNames(String wayName){
 
-        this.wayName = wayName;
+        this.wayNames.add(wayName);
 
     }
 
-    public String getWayName(){
+    public String getWayNames(int i){
 
-        return this.wayName;
+        return wayNames.get(i);
     }
 
+    public List<String> getWayNames() {
+        return wayNames;
+    }
+
+    public boolean shareWays(Node other){
+
+        for(String name : this.wayNames){
+
+            if(other.getWayNames().contains(name)){
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String sharedWays(Node other){
+
+        for(String name : this.wayNames){
+
+            if(other.getWayNames().contains(name)){
+                return name;
+            }
+        }
+        return "";
+    }
+
+    public boolean hasWayName(String name){
+
+        return this.wayNames.contains(name);
+    }
 
 }

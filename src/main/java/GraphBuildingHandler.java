@@ -90,10 +90,8 @@ public class GraphBuildingHandler extends DefaultHandler {
 
             currentNode = new Node(id, lat, lon);
 
-
             g.addNode(currentNode);
 
-            
             /* Hint: A graph-like structure would be nice. */
 
         } else if (qName.equals("way")) {
@@ -103,7 +101,6 @@ public class GraphBuildingHandler extends DefaultHandler {
             long wayID = Long.parseLong(attributes.getValue("id"));
 
             currentWay = new Way(wayID);
-
 
             //maybe just use a list here and store the connections in the way
 
@@ -118,8 +115,6 @@ public class GraphBuildingHandler extends DefaultHandler {
             currentWay.addConnection(wayReference);
 
             lastNodeInWay = wayReference;
-
-
 
             /* Hint1: It would be useful to remember what was the last node in this way. */
             /* Hint2: Not all ways are valid. So, directly connecting the nodes here would be
@@ -143,7 +138,6 @@ public class GraphBuildingHandler extends DefaultHandler {
                 if(ALLOWED_HIGHWAY_TYPES.contains(v) && currentWay.size() > 1){
 
                     validWay = true;
-
                 }
 
                 /* Hint: Setting a "flag" is good enough! */
@@ -152,9 +146,6 @@ public class GraphBuildingHandler extends DefaultHandler {
 
                 //added for extra
                 currentWay.addName(v);
-
-
-
             }
 //            System.out.println("Tag with k=" + k + ", v=" + v + ".");
         } else if (activeState.equals("node") && qName.equals("tag") && attributes.getValue("k")
@@ -212,18 +203,9 @@ public class GraphBuildingHandler extends DefaultHandler {
             if(validWay){
 
                 g.connectNodes(currentWay);
-
             }
 
-            //currentWay = null;
-
-            //currentNode = null;
-
             validWay = false;
-
-
-
         }
     }
-
 }

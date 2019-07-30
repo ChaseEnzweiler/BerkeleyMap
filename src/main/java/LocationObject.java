@@ -16,7 +16,6 @@ public class LocationObject {
         this. lon = lon;
 
         this.name = name;
-
     }
 
 }
