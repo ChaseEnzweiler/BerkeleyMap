@@ -1,4 +1,4 @@
-import com.sun.xml.internal.xsom.impl.scd.Iterators;
+//import com.sun.xml.internal.xsom.impl.scd.Iterators;
 import org.xml.sax.SAXException;
 
 import java.io.File;
@@ -23,9 +23,7 @@ public class GraphDB {
      * creating helper classes, e.g. Node, Edge, etc. */
 
     Map<Long, Node> nodeMap = new HashMap<>();
-
      public Trie prefixTrie = new Trie();
-
      public HashMap<String, Object> locations = new HashMap<>();
 
     /**
@@ -54,9 +52,7 @@ public class GraphDB {
      * @param node node to be added
      */
     void addNode(Node node){
-
         nodeMap.put(node.id, node);
-
     }
 
     /**
@@ -64,9 +60,7 @@ public class GraphDB {
      * @param node input node
      */
     public void removeNode(Node node){
-
         nodeMap.remove(node.id);
-
     }
 
     void connectNodes(Way way){
@@ -75,37 +69,23 @@ public class GraphDB {
         long currentID;
         long nextID;
         List<Long> connectionList = way.getConnectionList();
-
         currentID = connectionList.get(0);
-
         nextID = connectionList.get(1);
-
         nodeMap.get(currentID).addConnection(nextID);
-
         nodeMap.get(currentID).addWayNames(way.getWayName());
 
         for (int index = 1; index < connectionList.size() - 1; index++){
 
             previousID = connectionList.get(index - 1);
-
             currentID = connectionList.get(index);
-
             nextID = connectionList.get(index + 1);
-
             nodeMap.get(currentID).addConnection(previousID);
-
             nodeMap.get(currentID).addConnection(nextID);
-
             nodeMap.get(currentID).addWayNames(way.getWayName());
 
         }
-
         nodeMap.get(nextID).addConnection(currentID);
-
         nodeMap.get(nextID).addWayNames(way.getWayName());
-
-
-
     }
 
     /**
@@ -126,21 +106,14 @@ public class GraphDB {
         // TODO: Your code here.
 
         Node currentNode;
-
         List<Long> keysToRemove = new ArrayList<>();
-
         for(long key : nodeMap.keySet()){
-
             currentNode = nodeMap.get(key);
-
             if(!currentNode.hasConnection()){
-
                 keysToRemove.add(key);
             }
         }
-
         for(long key : keysToRemove){
-
             nodeMap.remove(key);
         }
     }
@@ -150,9 +123,7 @@ public class GraphDB {
      * @return An iterable of id's of all vertices in the graph.
      */
     Iterable<Long> vertices() {
-
         Set<Long> keys = nodeMap.keySet();
-
         return new ArrayList<>(keys);
     }
 
@@ -162,9 +133,7 @@ public class GraphDB {
      * @return An iterable of the ids of the neighbors of v.
      */
     Iterable<Long> adjacent(long v) {
-
         Node currentNode = nodeMap.get(v);
-
         return currentNode.getConnectionList();
     }
 
@@ -230,29 +199,17 @@ public class GraphDB {
         // iterate through until finding the min distance and return id of that node.
 
         Collection<Node> values = nodeMap.values();
-
         ArrayList<Node> nodeList = new ArrayList<>(values);
-
         double minDistance = Double.MAX_VALUE;
-
         long minID = 0;
-
         double distanceBetweenPoints;
-
         for (Node node : nodeList){
-
             distanceBetweenPoints = distance(lon, lat, node.getLon(), node.getLat());
-
             if(distanceBetweenPoints < minDistance){
-
                 minDistance = distanceBetweenPoints;
-
                 minID = node.id;
-
             }
-
         }
-
         return minID;
     }
 
@@ -262,9 +219,7 @@ public class GraphDB {
      * @return The longitude of the vertex.
      */
     double lon(long v) {
-
         Node currentNode = nodeMap.get(v);
-
         return currentNode.getLon();
     }
 
@@ -274,14 +229,11 @@ public class GraphDB {
      * @return The latitude of the vertex.
      */
     double lat(long v) {
-
         Node currentNode = nodeMap.get(v);
-
         return currentNode.getLat();
     }
 
     Node getNode(long id){
-
         return nodeMap.get(id);
     }
 }
