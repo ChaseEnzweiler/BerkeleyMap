@@ -7,11 +7,15 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e4ece2c-9488-42ca-9d92-c1d8aab200a7" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+    <list default="true" id="9e4ece2c-9488-42ca-9d92-c1d8aab200a7" name="Default" comment="cleaned up comments and spacing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GraphBuildingHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GraphBuildingHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GraphDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GraphDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LocationObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LocationObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MapServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MapServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Rasterer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Rasterer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Router.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Router.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Trie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Trie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Way.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Way.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -262,6 +266,14 @@
       <option name="presentableId" value="Default" />
       <updated>1550713575946</updated>
     </task>
+    <task id="LOCAL-00001" summary="cleaned up comments and spacing">
+      <created>1665860711136</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1665860711136</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -330,6 +342,21 @@
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936507" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0" sideWeight="0.4975278" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="cleaned up comments and spacing" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleaned up comments and spacing" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

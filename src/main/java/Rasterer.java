@@ -96,7 +96,6 @@ public class Rasterer {
         find starting and ending tile coordinates that will make up raster box
          */
         int[] rasterStartTile = findStartingTile(queryULLon, queryULLat, depth);
-
         int[]  rasterEndTile = findEndingTile(queryLRLon, queryLRLat, depth);
 
         /*
@@ -110,7 +109,6 @@ public class Rasterer {
          */
 
         double[] startRasterBoundary = upperLeftRasterBox(rasterStartTile, depth);
-
         double[] endRasterBoundary = lowerRightRasterBox(rasterEndTile, depth);
 
         double raster_ul_lon = startRasterBoundary[0];
@@ -165,23 +163,15 @@ public class Rasterer {
     public static int findDepth(double Londpp){
 
         double mapLondpp = calculateLondpp(-122.21191406, -122.29980468, 256);
-
         int depth = 0;
-
         while(Londpp < mapLondpp){
-
             mapLondpp = mapLondpp / 2;
-
             depth = depth + 1;
-
             if (depth >= 7){
-
                 return depth;
             }
         }
-
         return depth;
-
     }
 
     /**NEEDS DEBUGGING getting too many
@@ -198,35 +188,22 @@ public class Rasterer {
 
     public static int[] findStartingTile(double queryUlLon, double queryUlLat, int depth){
 
-
         double widthPerTileLon = (ROOT_LRLON - ROOT_ULLON) / Math.pow(2, depth);
-
         double widthPerTileLat = (ROOT_ULLAT - ROOT_LRLAT) / Math.pow(2, depth);
-
         int startTileLon;
-
         int startTileLat;
-
         if(queryUlLon <= ROOT_ULLON){
-
             startTileLon = 0;
-
         }else {
-
             startTileLon = (int) Math.floor((queryUlLon - ROOT_ULLON) / widthPerTileLon);
         }
-
         if(queryUlLat >= ROOT_ULLAT){
-
             startTileLat = 0;
-
         }else {
-
             startTileLat = (int) Math.floor((ROOT_ULLAT - queryUlLat) / widthPerTileLat);
         }
 
         int[] startArray = new int[] {startTileLon, startTileLat};
-
         return startArray;
 
     }
@@ -243,39 +220,21 @@ public class Rasterer {
     public static int[] findEndingTile(double queryLrLon, double queryLrLat, int depth){
 
         double widthPerTileLon = (ROOT_LRLON - ROOT_ULLON) / Math.pow(2, depth);
-
         double widthPerTileLat = (ROOT_ULLAT - ROOT_LRLAT) / Math.pow(2, depth);
-
         int endTileLon;
-
         int endTileLat;
-
         if(queryLrLon >= ROOT_LRLON){
-
             endTileLon = (int) Math.pow(2, depth) - 1;
-
         }else {
-
             endTileLon = (int) Math.floor((queryLrLon - ROOT_ULLON) / widthPerTileLon);
-
         }
-
         if(queryLrLat <= ROOT_LRLAT){
-
             endTileLat = (int) Math.pow(2, depth) - 1;
-
         } else{
-
-
             endTileLat = (int) Math.floor((ROOT_ULLAT - queryLrLat) / widthPerTileLat);
-
         }
-
         int[] endArray = new int[] {endTileLon, endTileLat};
-
         return endArray;
-
-
     }
 
 
@@ -292,37 +251,20 @@ public class Rasterer {
     public static String[][] getImages(int[] startArray, int[] endArray, int depth){
 
         int tileX1 = startArray[0];
-
         int tileX2 = endArray[0];
-
         int tileY1 = startArray[1];
-
         int tileY2 = endArray[1];
-
         String[][] imageGrid = new String[tileY2 - tileY1 + 1][tileX2 - tileX1 + 1];
-
-
         tileY1 = tileY1 - 1;
-
-
         for(int i = 0; i < imageGrid.length; i++){
-
             tileY1 = tileY1 + 1;
-
             tileX1 = startArray[0];
-
             for(int j = 0; j < imageGrid[0].length; j++){
-
                 imageGrid[i][j] = "d" + depth + "_x" + tileX1 + "_y" + tileY1 + ".png";
-
                 tileX1 = tileX1 + 1;
-
             }
-
         }
-
         return imageGrid;
-
     }
 
     /**
@@ -337,13 +279,9 @@ public class Rasterer {
     public static double[] upperLeftRasterBox(int[] startTile, int depth){
 
         double widthPerTile = (ROOT_LRLON - ROOT_ULLON) / Math.pow(2, depth);
-
         double rasterImageULLon =  ROOT_ULLON + (widthPerTile * (startTile[0]));
-
         double heightPerTile = (ROOT_ULLAT - ROOT_LRLAT) / Math.pow(2, depth);
-
         double rasterImageULLat = ROOT_ULLAT - (heightPerTile * startTile[1]);
-
         return new double[]{rasterImageULLon, rasterImageULLat};
 
     }
@@ -360,13 +298,9 @@ public class Rasterer {
     public static double[] lowerRightRasterBox(int[] endTile, int depth){
 
         double widthPerTile = (ROOT_LRLON - ROOT_ULLON) / Math.pow(2, depth);
-
         double rasterImageLRLon = ROOT_ULLON + (widthPerTile * (endTile[0] + 1));
-
         double heightPerTile = (ROOT_ULLAT - ROOT_LRLAT) / Math.pow(2, depth);
-
         double rasterImageLRLat = ROOT_ULLAT - (heightPerTile * (endTile[1] + 1));
-
         return new double[]{rasterImageLRLon, rasterImageLRLat};
 
 
@@ -386,46 +320,18 @@ public class Rasterer {
         /*
         bad query, aka numbers that make no sense
          */
-
         if(LRLon <= ULLon || ULLat <= LRLat){
-
             return false;
-
         }
 
         /*
         bad query, query box intersects no images
          */
-
         if(LRLat >= ROOT_ULLAT || ULLat <= ROOT_LRLAT){
-
             return false;
-
         } else if(ULLon >= ROOT_LRLON || LRLon <= ROOT_ULLON){
-
             return false;
-
         }
-
         return true;
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

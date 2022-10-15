@@ -31,16 +31,11 @@ public class Router {
          */
 
         long startID = g.closest(stlon, stlat);
-
         long destinationID = g.closest(destlon, destlat);
 
-
         Map<Long, Double> distanceTo = new HashMap<>();
-
         Map<Long, Long> edges = new HashMap<>();
-
         Set<Long> marked = new HashSet<>();
-
         List<Long> path = new ArrayList<>();
 
 
@@ -48,96 +43,65 @@ public class Router {
 
             @Override
             public int compare(Node node1, Node node2){
-
                 double heuristic1 = distanceTo.get(node1.getId()) + g.distance(node1.getId(), destinationID);
-
                 double heuristic2 = distanceTo.get(node2.getId()) + g.distance(node2.getId(), destinationID);
 
                 if(heuristic1 < heuristic2){
-
                     return -1;
-
                 } else if(heuristic1 > heuristic2){
-
                     return 1;
                 }
-
                 return 0;
             }
         }
 
         PriorityQueue<Node> fringe = new PriorityQueue<>(new NodeComparator());
-
         Node currentNode = g.getNode(startID);
-
         long currentNodeID = startID;
-
         fringe.add(currentNode);
-
         distanceTo.put(currentNodeID, 0.0);
-
         edges.put(currentNodeID, 0L);
-
         boolean reachedDestination = false;
 
         while(!reachedDestination){
-
             currentNode = fringe.poll();
-
             currentNodeID = currentNode.getId();
 
             if(marked.contains(currentNodeID)){
-
                 continue;
 
             }else if(currentNodeID == destinationID){
-
                 reachedDestination = true;
-
                 continue;
 
             } else{
-
                 for(long adj: g.adjacent(currentNodeID)){
-
                     if(distanceTo.containsKey(adj)){ //edit
-
                         if(distanceTo.get(adj) > distanceTo.get(currentNodeID) + g.distance(currentNodeID, adj)){
-
                             distanceTo.replace(adj, distanceTo.get(currentNodeID) + g.distance(currentNodeID, adj));
-
                             edges.replace(adj, currentNodeID);
                         }
 
                     } else{
-
                         distanceTo.put(adj, distanceTo.get(currentNodeID) + g.distance(currentNodeID, adj));
                         edges.put(adj, currentNodeID);
-
                     }
-
                     fringe.add(g.getNode(adj));
                     //edges.put(adj, currentNodeID);
                 }
             }
-
             marked.add(currentNodeID);
         }
 
         long idToAdd = destinationID;
 
         while(idToAdd!= startID){
-
             path.add(idToAdd);
-
             idToAdd = edges.get(idToAdd);
-
         }
 
         path.add(idToAdd);
-
         Collections.reverse(path);
-
         return path;
         }
 
@@ -150,46 +114,30 @@ public class Router {
     public static String bearingHelper(Node node1, Node node2, GraphDB g){
 
         double bearingDigit = g.bearing(node1.getId(), node2.getId());
-
         double absBearing = Math.abs(bearingDigit);
 
         if(absBearing <= 15.0){
-
             return NavigationDirection.DIRECTIONS[1];
-
         } else if(absBearing > 15.0 && absBearing <= 30.0){
-
             if(bearingDigit > 0.0){
                 // turn left
                 return NavigationDirection.DIRECTIONS[3];
-
             }
-
             // turn right
-
             return NavigationDirection.DIRECTIONS[2];
 
-
         } else if(absBearing > 30.0 && absBearing <= 100.0){
-
             if(bearingDigit < 0.0){
                 //turn left
                 return NavigationDirection.DIRECTIONS[4];
-
             }
-
             //turn right
             return NavigationDirection.DIRECTIONS[5];
-
-
         } else{
-
             if(bearingDigit < 0.0){
                 //turn left
                 return NavigationDirection.DIRECTIONS[7];
-
             }
-
             //turn right
             return NavigationDirection.DIRECTIONS[6];
         }
@@ -211,70 +159,45 @@ public class Router {
         List<NavigationDirection> directions = new ArrayList<>();
 
         // set direction, way and distance
-
         String direction = NavigationDirection.DIRECTIONS[0]; // start from int to string
-
         Node currentNode = g.getNode(route.get(0));
-
         Node nextNode;
-
         String way = currentNode.sharedWays(g.getNode(route.get(1))); //FIXME may need to loop to find a correct way name
-
         double distance = 0.0;
-
 
         for(int i = 1; i < route.size(); i++){
 
             // add distance if next way is same as current
-
             nextNode = g.getNode(route.get(i));
 
             /*
             next way is the same so update the distance
              */
-
             if(nextNode.hasWayName(way)){
-
                 distance = distance + g.distance(currentNode.getId(), nextNode.getId());
-
             } else {
-
                 /*
                 next node is in different way so need to return a navdir object for current node then
                 set direction, reset distance, and set new way
                  */
-
                 distance = distance + g.distance(currentNode.getId(), nextNode.getId());
-
-
                 String navigation = direction + " on " + way + " and continue for " + distance + " miles.";
-
                 directions.add(NavigationDirection.fromString(navigation));
-
 
                 /*
                 set new direction and way and reset distance to zero, may need helper for bearing.
-
                  */
 
-                direction = bearingHelper(nextNode, currentNode, g); //FIXME added previous Node
-
-
-                way = currentNode.sharedWays(nextNode); //FIXME may need to loop to find correct way name
-
+                direction = bearingHelper(nextNode, currentNode, g);
+                way = currentNode.sharedWays(nextNode);
                 distance = 0.0;
-
             }
-
             currentNode = nextNode;
-
         }
 
         String navigation = direction + " on " + way + " and continue for " + distance + " miles.";
-
         directions.add(NavigationDirection.fromString(navigation));
-
-        return directions; // FIXME
+        return directions;
     }
 
 

@@ -280,7 +280,6 @@ public class MapServer {
      * cleaned <code>prefix</code>.
      */
     public static List<String> getLocationsByPrefix(String prefix) {
-
         return graph.prefixTrie.getPrefixes(prefix);
     }
 
@@ -299,9 +298,7 @@ public class MapServer {
     public static List<Map<String, Object>> getLocations(String locationName) {
 
         List<Map<String, Object>> locations = new ArrayList<>();
-
         LocationObject current = (LocationObject) graph.locations.get(locationName);
-
         Map<String, Object> locationInfo = new HashMap<>();
 
         locationInfo.put("id", current.id);
@@ -310,7 +307,6 @@ public class MapServer {
         locationInfo.put("name", current.name);
 
         locations.add(locationInfo);
-
         return locations;
     }
 
